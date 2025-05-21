@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BAHRI – Bio Autonomous Hull Robot for Innovation</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    /* RESET & BASIC */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f7fb;
+      color: #10375c;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    a {
+      color: #2a9d8f;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #073b4c;
+    }
+    p {
+      margin-bottom: 1rem;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 6px;
+      padding: 0.75rem 1.5rem;
+      transition: background-color 0.3s ease;
+    }
+    /* CONTAINER */
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-bottom: 3rem;
+    }
+    section {
+      padding: 4rem 0;
+      border-bottom: 1px solid #d4e4ed;
+    }
+    /* HEADER/HERO */
+    header {
+      background: linear-gradient(135deg, #05668d 0%, #028090 100%);
+      color: white;
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 1rem;
+      position: relative;
+    }
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
+    }
+    header p.tagline {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+    header .buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    header .buttons button {
+      background-color: #2a9d8f;
+      color: white;
+      box-shadow: 0 4px 6px rgba(42,157,143,0.6);
+    }
+    header .buttons button:hover {
+      background-color: #21867a;
+      box-shadow: 0 6px 8px rgba(33,134,122,0.8);
+    }
+    header .hero-image {
+      margin-top: 3rem;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle at center, #56cfe1, #023e8a);
+      border-radius: 50%;
+      box-shadow: 0 0 30px #02809088;
+      position: relative;
+      overflow: hidden;
+    }
+    header .hero-image svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ABOUT */
+    #about p, #impact ul, #features .features-grid, #design .design-cards, #prototype .prototype-gallery {
+      margin-top: 1rem;
+    }
+    #about ul, #impact ul {
+      list-style: disc inside;
+      max-width: 600px;
+      margin-left: 1rem;
+    }
+
+    /* FEATURES */
+    #features {
+      background: #e0f7fa;
+      border-radius: 10px;
+      padding: 2rem;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .feature-card {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    }
+    .feature-card i {
+      font-size: 2.5rem;
+      color: #05668d;
+      margin-bottom: 0.7rem;
+    }
+
+    /* DESIGN & TECH */
+    #design .design-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .design-info {
+      flex: 1 1 300px;
+    }
+    .design-image {
+      flex: 1 1 300px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+      background: white;
+      text-align: center;
+    }
+    .design-image img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* HOW IT WORKS */
+    #how-it-works {
+      position: relative;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 2rem;
+      font-size: 1.1rem;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .step-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background-color: #2a9d8f;
+      color: white;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      flex-shrink: 0;
+      user-select: none;
+    }
+    .step-text {
+      background: #a0d8efcc;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      flex: 1;
+      box-shadow: 2px 2px 8px #56cfe1aa;
+    }
+
+    /* AI CHATBOT */
+    #chatbot {
+      background: #ffffffdd;
+      max-width: 540px;
+      margin: 2rem auto 0 auto;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    }
+    #chatbot h3 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #05668d;
+    }
+    #chat-log {
+      height: 280px;
+      overflow-y: auto;
+      background: #e5f0f9;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: #073b4c;
+      margin-bottom: 1rem;
+      box-shadow: inset 0 0 6px #02809088;
+    }
+    .chat-entry {
+      margin-bottom: 0.6rem;
+    }
+    .chat-entry.user {
+      text-align: right;
+      font-weight: 600;
+      color: #2a9d8f;
+    }
+    .chat-entry.bot {
+      text-align: left;
+      color: #073b4c;
+      font-style: italic;
+    }
+    #chat-input {
+      width: 100%;
+      padding: 0.65rem 1rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1.5px solid #2a9d8f;
+    }
+    #chat-submit {
+      margin-top: 0.5rem;
+      background-color: #2a9d8f;
+      color: white;
+      width: 100%;
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+    #chat-submit:hover {
+      background-color: #21867a;
+    }
+
+    /* IMPACT */
+    #impact ul {
+      max-width: 600px;
+      list-style: square inside;
+      color: #05668d;
+    }
+    #impact ul li {
+      margin-bottom: 0.7rem;
+      font-weight: 600;
+    }
+
+    /* PROTOTYPE */
+    #prototype .prototype-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+      justify-content: center;
+    }
+    #prototype .prototype-gallery img,
+    #prototype .prototype-gallery video {
+      width: 280px;
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      background: white;
+      object-fit: cover;
+    }
+    #prototype pre {
+      background: #e0f7fa;
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin-top: 1rem;
+      max-width: 700px;
+      font-family: 'Consolas', monaco, monospace;
+      font-size: 0.9rem;
+      color: #05668d;
+      box-shadow: inset 0 0 10px #56cfe1aa;
+    }
+
+    /* TEAM */
+    #team .team-single {
+      max-width: 400px;
+      margin: 2rem auto 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px #02809088;
+      padding: 2rem 2.5rem;
+      text-align: center;
+    }
+    #team .team-single h4 {
+      margin-top: 0;
+      color: #05668d;
+      font-size: 1.8rem;
+      margin-bottom: 0.7rem;
+    }
+    #team .team-single p.role {
+      font-style: italic;
+      color: #21867a;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    #team .team-message {
+      margin-top: 1rem;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: #073b4c;
+      text-align: center;
+      font-style: oblique;
+    }
+
+    /* CONTACT */
+    #contact form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    #contact input, #contact textarea {
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+      border: 1.8px solid #2a9d8f;
+      border-radius: 10px;
+      font-family: inherit;
+      resize: vertical;
+    }
+    #contact button {
+      background-color: #2a9d8f;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 0.8rem;
+      border-radius: 10px;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+    #contact button:hover {
+      background-color: #21867a;
+    }
+    #contact small {
+      color: #21867a;
+      text-align: center;
+      margin-top: 1rem;
+      display: block;
+    }
+
+    /* FOOTER */
+    footer {
+      background-color: #022f40;
+      color: #88c9bf;
+      text-align: center;
+      padding: 1rem 0;
+      font-size: 0.9rem;
+    }
+
+    /* MEDIA QUERIES */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+      header p.tagline {
+        font-size: 1.1rem;
+      }
+      .design-cards, .features-grid {
+        flex-direction: column;
+        grid-template-columns: 1fr !important;
+      }
+      #design .design-cards,
+      .features-grid {
+        gap: 1rem;
+      }
+      .design-info, .design-image {
+        flex: 1 1 100%;
+      }
+      .feature-card {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header id="home" role="banner">
+    <h1>BAHRI – Bio Autonomous Hull Robot for Innovation</h1>
+    <p class="tagline">Cleaning the future of marine travel – sustainably.</p>
+    <div class="buttons" role="navigation" aria-label="Quick navigation buttons">
+      <button onclick="scrollToSection('features')">View Features</button>
+      <button onclick="scrollToSection('prototype')">Try Prototype</button>
+      <button onclick="scrollToSection('about')">About Project</button>
+    </div>
+    <div class="hero-image" aria-label="3D render of BAHRI hull-cleaning robot">
+      <!-- Simple SVG placeholder representing a robot hull cleaner -->
+      <svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+        <circle cx="100" cy="100" r="80" fill="#023E8A" />
+        <rect x="50" y="45" width="100" height="25" rx="6" ry="6" fill="#90e0ef" />
+        <circle cx="80" cy="100" r="30" fill="#48cae4" />
+        <circle cx="120" cy="100" r="30" fill="#90e0ef" />
+        <rect x="70" y="110" width="60" height="10" rx="5" ry="5" fill="#05668d" />
+        <line x1="65" y1="80" x2="80" y2="80" stroke="#90e0ef" stroke-width="8" stroke-linecap="round" />
+        <line x1="135" y1="80" x2="120" y2="80" stroke="#48cae4" stroke-width="8" stroke-linecap="round" />
+      </svg>
+    </div>
+  </header>
+
+  <main>
+    <!-- About -->
+    <section id="about" class="container" tabindex="-1" aria-labelledby="about-title">
+      <h2 id="about-title">About the Project</h2>
+      <p><strong>The Problem:</strong> Marine biofouling and the costly, environmentally impactful process of dry docking ships for hull cleaning.</p>
+      <p><strong>Objective:</strong> To build an autonomous, eco-friendly hull cleaner robot that operates underwater to maintain hull cleanliness sustainably.</p>
+      <p><strong>Sustainable Development Goals:</strong> This project aligns with SDG 9 (Industry, Innovation, and Infrastructure) and SDG 14 (Life Below Water).</p>
+      <p><strong>Target Users:</strong></p>
+      <ul>
+        <li>Shipping companies</li>
+        <li>Navy fleets</li>
+        <li>Port authorities and operators</li>
+      </ul>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="container" tabindex="-1" aria-labelledby="features-title" aria-describedby="features-desc">
+      <h2 id="features-title">Key Features</h2>
+      <p id="features-desc">BAHRI incorporates advanced robotics and sustainable design to provide efficient, marine-safe hull cleaning:</p>
+      <div class="features-grid" role="list">
+        <article class="feature-card" role="listitem">
+          <i class="fas fa-leaf" aria-hidden="true"></i>
+          <h3>Eco-Cleaning System</h3>
+          <p>Environmentally safe bio-cleaning technology that protects marine life.</p>
+        </article>
+        <article class="feature-card" role="listitem">
+          <i class="fas fa-robot" aria-hidden="true"></i>
+          <h3>Robotic Arms & Tool-Swapping</h3>
+          <p>Adaptive robotic arms can swap tools for optimized cleaning.</p>
+        </article>
+        <article class="feature-card" role="listitem">
+          <i class="fas fa-solar-panel" aria-hidden="true"></i>
+          <h3>Solar-Powered Dock</h3>
+          <p>Self-sustaining energy system with solar power for recharging.</p>
+        </article>
+        <article class="feature-card" role="listitem">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+          <h3>AI Navigation</h3>
+          <p>Smart navigation using AI for efficient hull mapping and cleaning.</p>
+        </article>
+        <article class="feature-card" role="listitem">
+          <i class="fas fa-recycle" aria-hidden="true"></i>
+          <h3>Sustainable Materials</h3>
+          <p>Made from recycled plastic and aluminum for environmental responsibility.</p>
+        </article>
+        <article class="feature-card" role="listitem">
+          <i class="fas fa-water" aria-hidden="true"></i>
+          <h3>Marine-Safe Operation</h3>
+          <p>Operates without harmful chemicals or damage to marine ecosystems.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Design & Technology -->
+    <section id="design" class="container" tabindex="-1" aria-labelledby="design-title">
+      <h2 id="design-title">Design & Technology</h2>
+      <div class="design-cards">
+        <div class="design-info" aria-label="Cuboid design explanation and materials used">
+          <h3>Cuboid Design & Dimensions</h3>
+          <p>BAHRI features a compact cuboid design optimized for stability and maneuverability. Approximate dimensions: 1.5m length × 0.8m width × 0.6m height.</p>
+
+          <h3>Materials</h3>
+          <p>Constructed with recycled plastic and marine-grade aluminum, balancing durability and sustainability.</p>
+
+          <h3>Propulsion System & Power</h3>
+          <p>Powered by quiet electric thrusters with an estimated cruising range of 8 hours per charge, recharged at a solar-powered dock.</p>
+        </div>
+        <figure class="design-image" aria-label="Sketches and CAD models">
+          <img src="https://cdn.pixabay.com/photo/2016/11/30/08/05/robot-1874884_1280.png" alt="Illustration of a robotic cuboid underwater vehicle" />
+          <figcaption>Conceptual CAD model of BAHRI</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="container" tabindex="-1" aria-labelledby="how-title">
+      <h2 id="how-title">How It Works</h2>
+      <div class="steps" role="list">
+        <div class="step" role="listitem">
+          <div class="step-number">1</div>
+          <div class="step-text">BAHRI approaches the ship hull and performs eco-friendly cleaning using specialized brushes and suction.</div>
+        </div>
+        <div class="step" role="listitem">
+          <div class="step-number">2</div>
+          <div class="step-text">Robotic arms swap tools as needed to handle different fouling scenarios.</div>
+        </div>
+        <div class="step" role="listitem">
+          <div class="step-number">3</div>
+          <div class="step-text">Once cleaning is complete, BAHRI docks to the solar-powered station to recharge.</div>
+        </div>
+        <div class="step" role="listitem">
+          <div class="step-number">4</div>
+          <div class="step-text">AI analyzes hull condition data and plans the next cleaning cycle autonomously.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Chatbot -->
+    <section id="chatbot" class="container" aria-labelledby="chatbot-title" tabindex="-1">
+      <h3 id="chatbot-title">Ask BAHRI AI Chatbot</h3>
+      <div id="chat-log" aria-live="polite" aria-atomic="false"></div>
+      <form id="chat-form" aria-label="Chat with BAHRI AI" autocomplete="off">
+        <input type="text" id="chat-input" placeholder="Ask about cleaning methods or tools..." required aria-required="true" aria-labelledby="chatbot-title" />
+        <button type="submit" id="chat-submit">Send</button>
+      </form>
+    </section>
+
+    <!-- Impact -->
+    <section id="impact" class="container" tabindex="-1" aria-labelledby="impact-title">
+      <h2 id="impact-title">Impact</h2>
+      <ul>
+        <li>Saves fuel & reduces costly dry-docking time</li>
+        <li>Protects marine life with chemical-free cleaning</li>
+        <li>Avoids harmful chemicals and pollution</li>
+        <li>Reduces carbon footprint through solar power and efficient design</li>
+        <li>Supports sustainable shipping and marine ecosystem health</li>
+      </ul>
+    </section>
+
+    <!-- Prototype -->
+    <section id="prototype" class="container" tabindex="-1" aria-labelledby="prototype-title">
+      <h2 id="prototype-title">Prototype</h2>
+      <div class="prototype-gallery" aria-label="Photos and videos of prototype models">
+        <img src="https://cdn.pixabay.com/photo/2019/04/27/17/12/robot-4159857_1280.jpg" alt="Cardboard prototype of BAHRI" />
+        <img src="https://cdn.pixabay.com/photo/2020/02/12/13/08/robot-4842697_1280.jpg" alt="Acrylic model of hull cleaning robot" />
+      </div>
+      <h3>Exploded View</h3>
+      <img src="https://cdn.pixabay.com/photo/2020/03/20/13/39/robot-4951174_1280.png" alt="Exploded view diagram of robot components" style="max-width: 600px; display: block; margin: 1rem auto; border-radius: 10px;"/>
+
+      <h3>Sample Code Snippet</h3>
+      <pre><code>// Example Arduino code snippet for controlling robotic arm
+#include &lt;Servo.h&gt;
+
+Servo armServo;
+
+void setup() {
+  armServo.attach(9);
+  Serial.begin(9600);
+}
+
+void loop() {
+  armServo.write(90);  // Move arm to neutral position
+  delay(1000);
+  armServo.write(45);  // Move arm to cleaning tool position
+  delay(2000);
+}
+</code></pre>
+    </section>
+
+    <!-- Team -->
+    <section id="team" class="container" tabindex="-1" aria-labelledby="team-title">
+      <h2 id="team-title">Team & Contributors</h2>
+      <div class="team-single" role="region" aria-label="Team contributor information">
+        <h4>Engineered by: Sowmik Narayanan</h4>
+      </div>
+      <p class="team-message">Driven by innovation, guided by sustainability.</p>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="container" tabindex="-1" aria-labelledby="contact-title">
+      <h2 id="contact-title">Contact & Feedback</h2>
+      <form id="contact-form" aria-label="Contact form">
+        <input type="text" id="name" name="name" placeholder="Your Name" required aria-required="true" />
+        <input type="email" id="email" name="email" placeholder="Your Email" required aria-required="true" />
+        <textarea id="message" name="message" rows="5" placeholder="Your Message" required aria-required="true"></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+      <small>Download our <a href="#" aria-label="Download BAHRI brochure">brochure</a> or <a href="#" aria-label="Watch BAHRI poster video">watch our poster</a>.</small>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <p>© 2024 BAHRI Project. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Smooth scroll helper
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.focus();
+        el.scrollIntoView({behavior: 'smooth'});
+      }
+    }
+
+    // Simple AI Chatbot simulation
+    const chatbotForm = document.getElementById('chat-form');
+    const chatLog = document.getElementById('chat-log');
+    const chatInput = document.getElementById('chat-input');
+
+    const botResponses = [
+      {keywords: ['cleaning', 'method', 'methodology'], response: 'BAHRI uses gentle brushes combined with suction to remove biofouling without harming marine life.'},
+      {keywords: ['fouling', 'hull', 'scenario', 'diagnose'], response: 'Common fouling scenarios include algae, barnacles, and slime. BAHRI adjusts tools accordingly to clean them effectively.'},
+      {keywords: ['tools', 'recommend', 'tool'], response: 'The robot can swap between brush, scraper, and suction tools depending on the fouling type.'},
+      {keywords: ['charge', 'dock', 'recharge'], response: 'BAHRI docks at a solar-powered station to recharge its batteries autonomously.'},
+      {keywords: ['navigation', 'ai'], response: 'Our AI system maps the hull and plans the cleaning path for maximum efficiency.'},
+      {keywords: ['default'], response: 'I’m here to help! Please ask about cleaning methods, fouling diagnosis, or tools.'}
+    ];
+
+    function addChatEntry(text, sender) {
+      const div = document.createElement('div');
+      div.className = 'chat-entry ' + sender;
+      div.textContent = text;
+      chatLog.appendChild(div);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    function getBotResponse(userText) {
+      userText = userText.toLowerCase();
+      for (const pair of botResponses) {
+        if (pair.keywords.some(kw => userText.includes(kw))) {
+          return pair.response;
+        }
+      }
+      return botResponses.find(pair => pair.keywords.includes('default')).response;
+    }
+
+    chatbotForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const userText = chatInput.value.trim();
+      if (!userText) return;
+      addChatEntry(userText, 'user');
+      chatInput.value = '';
+      setTimeout(() => {
+        const botReply = getBotResponse(userText);
+        addChatEntry(botReply, 'bot');
+      }, 800);
+    });
+
+    // Focus trap on section scroll for accessibility
+    document.querySelectorAll('section').forEach(section => {
+      section.addEventListener('focus', () => {
+        section.style.outline = '4px solid #2a9d8f';
+      });
+      section.addEventListener('blur', () => {
+        section.style.outline = 'none';
+      });
+    });
+
+    // Contact form dummy submit handler
+    const contactForm = document.getElementById('contact-form');
+    contactForm.addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Thank you for your message! We will get back to you soon.');
+      contactForm.reset();
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
